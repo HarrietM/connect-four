@@ -3,19 +3,41 @@ function Board(selector){
 }
 
 Board.prototype.load = function(){
-  var tileCounter = 0;
+
   $(this.selector).append("<div class='board'></div>");
-  for (var i = 0; i < 42; i++){
-    tileCounter++;
-    var uniqueCounter = tileCounter;
-    var tile = "<div class='tile' id="+uniqueCounter+"></div>";
-    $(".board").append(tile);
+
+  for (var i = 0; i < 7; i++){
+    var columnButton = "<div class='column-button' id="+i+"></div>"
+    $(".board").append(columnButton)
+  }
+
+  for (var c = 0; c < 6; c++){
+    for (var r = 0; r < 7; r++){
+      var tile = "<div class='tile' id=r"+r+"_c"+c+"></div>"
+      $(".board").append(tile);
+    }
   }
 }
 
-Board.prototype.selectTile = function() {
-  $(this.selector).on("click", ".tile", function(e){
+Board.prototype.selectColumn = function(game) {
+  $(this.selector).on("click", ".column-button", function(e){
     e.preventDefault();
-    $(e.target).addClass("player1")
+    game.placePlayerPiece($(e.target.id));
+    // $(e.target).addClass("player1")
   });
 }
+
+// Board.prototype.play = function(player1){
+//   var p1 = player1;
+//   if (p1.turn == true ){
+//     player1.selectTile(1);
+//   }else {
+//     alert("player2!")
+//   }
+
+// }
+
+
+// Board.prototype.gameOver = function(){
+//   return false
+// }

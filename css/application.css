@@ -11,6 +11,12 @@ body {
   flex-wrap: wrap;
 }
 
+.column-button {
+  padding: 5%;
+  margin: 2%;
+  background-color: red;
+}
+
 .tile {
   padding: 5%;
   margin: 2%;
