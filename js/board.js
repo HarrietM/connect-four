@@ -7,8 +7,8 @@ Board.prototype.load = function(){
   $(this.selector).append("<div class='board'></div>");
 
   for (var i = 0; i < 7; i++){
-    var columnButton = "<div class='column-button' id="+i+"></div>"
-    $(".board").append(columnButton)
+    var columnButton = "<div class='column-button' id="+i+"></div>";
+    $(".board").append(columnButton);
   }
 
   for (var c = 0; c < 6; c++){
@@ -19,11 +19,10 @@ Board.prototype.load = function(){
   }
 }
 
-Board.prototype.selectColumn = function(game) {
+Board.prototype.selectColumn = function(game, player) {
   $(this.selector).on("click", ".column-button", function(e){
     e.preventDefault();
-    game.placePlayerPiece($(e.target.id));
-    // $(e.target).addClass("player1")
+    game.placePlayerPiece($(e.target.id), player);
   });
 }
 

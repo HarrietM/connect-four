@@ -18,13 +18,19 @@ Game.prototype.createBoard = function(){
   });
 }
 
-Game.prototype.placePlayerPiece = function(r){
+Game.prototype.placePlayerPiece = function(r, player){
   var board = this.board;
   var r = r.selector
   for (var i = 5; i >= 0; i--){
     if (board[r][i].status == 0){
       board[r][i].status = 1;
-      $("#r"+r+"_c"+i).addClass("player1")
+      console.log(player.num)
+      $("#r"+r+"_c"+i).addClass("player"+player.num)
+      if (player.num == 1){
+        player.num = 2
+      }else {
+        player.num = 1
+      }
       break;
     }
   }
@@ -34,7 +40,8 @@ function Tile(){
   this.status = 0;
 }
 
-// test = new Game();
-// test.createBoard();
-// test.placePlayerPiece(3);
+test = new Game();
+test.createBoard();
+test.placePlayerPiece(3);
+// test.placePlayerPiece(3, 2);
 // console.log(test.board)

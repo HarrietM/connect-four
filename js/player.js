@@ -2,6 +2,7 @@ function Player(selector, id){
   this.selector = selector;
   this.id = id;
   this.turn = true;
+  this.num = 1
   var playerId = this.id;
 }
 
