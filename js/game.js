@@ -24,7 +24,7 @@ Game.prototype.placePlayerPiece = function(r, player){
   var board = this.board;
   var r = r.selector
   for (var i = 5; i >= 0; i--){
-    if (board[r][i].status == 3){
+    if (board[r][i].status == 0){
       board[r][i].status = player.num;
       $("#r"+r+"_c"+i).addClass("player"+player.num)
       if (player.num == 1){
@@ -43,7 +43,7 @@ Game.prototype.win = function(r,c){
   var board = this.board;
   if(this.horizontalOrVerticalWin(r,c)){
     var winner = board[r][c].status;
-    alert("Player "+winner+" is the winner!")
+    swal("Player "+winner, "You are the winner!", "success")
     return true
   }
 }
@@ -56,7 +56,7 @@ Game.prototype.horizontalOrVerticalWin = function(r,c){
   this.WIN_STATES.forEach(function(state){
    var tilesStatus = [];
    state.forEach(function(coordinate){
-      if(that.horizontalWin(r,c,coordinate, player) || that.verticalWin(r,c,coordinate, player) ){
+      if(that.horizontalWin(r,c,coordinate, player) || that.verticalWin(r,c,coordinate, player) || that.diagonalWin(r,c,coordinate,player)){
         tilesStatus.push(1);
       }
     });
@@ -70,6 +70,17 @@ Game.prototype.horizontalOrVerticalWin = function(r,c){
   }
 
   return that.won;
+}
+
+Game.prototype.diagonalWin = function(r,c,coordinate,player) {
+  var that = this;
+  var status = false;
+  if(that.inBounds(Number(r)+Number(coordinate),Number(c)+Number(coordinate))){
+    if(that.board[Number(r)+Number(coordinate)][Number(c)+Number(coordinate)].status == player){
+      status = true
+    }
+  }
+  return status
 }
 
 Game.prototype.horizontalWin = function(r,c,coordinate,player){
@@ -94,58 +105,6 @@ Game.prototype.verticalWin = function(r,c,coordinate,player){
   return status;
 }
 
-// Game.prototype.horizontalWin = function(r,c){
-//  var win = [];
-//  var that = this;
-//  var player = that.board[r][c].status;
-
-//  this.WIN_STATES.forEach(function(state){
-//   var tilesStatus = [];
-//   state.forEach(function(coordinate){
-//     if(that.inBounds(r,c+coordinate)){
-//       if(that.board[r][c+coordinate].status == player){
-//         tilesStatus.push(1);
-//       }
-//     }
-//   });
-//   if(tilesStatus.length == 3){
-//     win.push("win");
-//   }
-//  });
-
-//  if(win.indexOf("win") == 0){
-//    that.won = true;
-//  }
-
-//  return that.won;
-// }
-
-// Game.prototype.verticalWin = function(r,c){
-//  var win = [];
-//  var that = this;
-//  var player = that.board[r][c].status;
-
-//  this.WIN_STATES.forEach(function(state){
-//   var tilesStatus = [];
-//   state.forEach(function(coordinate){
-//     if(that.inBounds(Number(r)+Number(coordinate),Number(c))){
-//       if(that.board[Number(r)+Number(coordinate)][c].status == player){
-//         tilesStatus.push(1);
-//       }
-//     }
-//   });
-//   if(tilesStatus.length == 3){
-//     win.push("win");
-//   }
-//  });
-
-//  if(win.indexOf("win") == 0){
-//    that.won = true;
-//  }
-
-//  return that.won;
-// }
-
 Game.prototype.inBounds = function(r, c) {
  if(r >= 0 && r < 7){
   if(c >= 0 && c < 6){
@@ -155,11 +114,5 @@ Game.prototype.inBounds = function(r, c) {
 }
 
 function Tile(){
-  this.status = 3;
+  this.status = 0;
 }
-
-// test = new Game();
-// test.createBoard();
-// test.placePlayerPiece(3);
-// test.placePlayerPiece(3, 2);
-// console.log(test.board)
