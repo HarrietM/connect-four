@@ -29,3 +29,7 @@ Board.prototype.selectColumn = function(game, player, tileID) {
 Board.prototype.tileID = function(r, i, num){
     $("#r"+r+"_c"+i).addClass("player"+num)
 }
+
+Board.prototype.win = function(winner){
+  swal("Player "+winner, "You are the winner!", "success")
+}
