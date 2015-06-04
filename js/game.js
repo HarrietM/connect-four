@@ -20,13 +20,13 @@ Game.prototype.createBoard = function(){
   });
 }
 
-Game.prototype.placePlayerPiece = function(r, player){
+Game.prototype.placePlayerPiece = function(r, player, tileID){
   var board = this.board;
   var r = r.selector
   for (var i = 5; i >= 0; i--){
     if (board[r][i].status == 0){
       board[r][i].status = player.num;
-      $("#r"+r+"_c"+i).addClass("player"+player.num)
+      tileID(r, i, player.num)
       if (player.num == 1){
         player.num = 2
       }else {
@@ -174,8 +174,4 @@ Game.prototype.inBounds = function(r, c) {
     return true
   }
  }
-}
-
-function Tile(){
-  this.status = 0;
 }

@@ -9,6 +9,6 @@ boardController.prototype.run = function(){
 
   this.board.load();
   this.game.createBoard();
-  this.board.selectColumn(this.game, this.player);
+  this.board.selectColumn(this.game, this.player, this.board.tileID);
 
 }

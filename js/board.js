@@ -19,9 +19,13 @@ Board.prototype.load = function(){
   }
 }
 
-Board.prototype.selectColumn = function(game, player) {
+Board.prototype.selectColumn = function(game, player, tileID) {
   $(this.selector).on("click", ".column-button", function(e){
     e.preventDefault();
-    game.placePlayerPiece($(e.target.id), player);
+    game.placePlayerPiece($(e.target.id), player, tileID);
   });
+}
+
+Board.prototype.tileID = function(r, i, num){
+    $("#r"+r+"_c"+i).addClass("player"+num)
 }
