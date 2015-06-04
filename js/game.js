@@ -29,11 +29,10 @@ Game.prototype.placePlayerPiece = function(r, player){
       $("#r"+r+"_c"+i).addClass("player"+player.num)
       if (player.num == 1){
         player.num = 2
-        this.win(r,i)
       }else {
         player.num = 1
-        this.win(r,i)
       }
+      this.win(r,i)
       break;
     }
   }
@@ -41,14 +40,14 @@ Game.prototype.placePlayerPiece = function(r, player){
 
 Game.prototype.win = function(r,c){
   var board = this.board;
-  if(this.horizontalOrVerticalWin(r,c)){
+  if(this.checkForHorizontalorVerticalWin(r,c) || this.checkforDiagonalWin(r,c) || this.checkforSecondaryDiagonalWin(r,c)){
     var winner = board[r][c].status;
     swal("Player "+winner, "You are the winner!", "success")
     return true
   }
 }
 
-Game.prototype.horizontalOrVerticalWin = function(r,c){
+Game.prototype.checkForHorizontalorVerticalWin = function(r,c){
   var win = [];
   var that = this;
   var player = that.board[r][c].status;
@@ -56,7 +55,7 @@ Game.prototype.horizontalOrVerticalWin = function(r,c){
   this.WIN_STATES.forEach(function(state){
    var tilesStatus = [];
    state.forEach(function(coordinate){
-      if(that.horizontalWin(r,c,coordinate, player) || that.verticalWin(r,c,coordinate, player) || that.diagonalWin(r,c,coordinate,player)){
+      if(that.horizontalWin(r,c,coordinate, player) || that.verticalWin(r,c,coordinate, player)){
         tilesStatus.push(1);
       }
     });
@@ -70,6 +69,70 @@ Game.prototype.horizontalOrVerticalWin = function(r,c){
   }
 
   return that.won;
+}
+
+Game.prototype.checkforDiagonalWin = function(r,c){
+  var win = [];
+  var that = this;
+  var player = that.board[r][c].status;
+
+  this.WIN_STATES.forEach(function(state){
+   var tilesStatus = [];
+   state.forEach(function(coordinate){
+      if(that.diagonalWin(r,c,coordinate,player)){
+        tilesStatus.push(1);
+      }
+    });
+   if(tilesStatus.length == 3){
+     win.push("win");
+   }
+  });
+
+  if(win.indexOf("win") == 0){
+    that.won = true;
+  }
+
+  return that.won;
+}
+
+Game.prototype.checkforSecondaryDiagonalWin = function(r,c){
+  var win = [];
+  var that = this;
+  var player = that.board[r][c].status;
+  var winstates = [[[-1,1,2],[1,2,3],[-3,-2,-1],[-2,-1,1]]];
+
+  this.WIN_STATES.forEach(function(state){
+   var tilesStatus = [];
+   state.forEach(function(coordinate){
+      if(that.secondaryDiagonalWin(r,c,coordinate,player)){
+        tilesStatus.push(1);
+      }
+    });
+   if(tilesStatus.length == 3){
+     win.push("win");
+   }
+  });
+
+  if(win.indexOf("win") == 0){
+    that.won = true;
+  }
+
+  return that.won;
+}
+
+Game.prototype.secondaryDiagonalWin = function(r,c,coordinate,player){
+  var that = this;
+  var status = false;
+  var row = (Number(r)+Number(coordinate));
+  var column = (Number(c)-(Number(coordinate)));
+  if(that.inBounds(row,column)){
+    if(that.board[row][column].status == player){
+      console.log("here")
+      status = true
+    }
+  }
+  return status
+
 }
 
 Game.prototype.diagonalWin = function(r,c,coordinate,player) {

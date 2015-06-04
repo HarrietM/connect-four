@@ -11,16 +11,16 @@ body {
   flex-wrap: wrap;
 }
 
-.column-button {
-  padding: 5%;
-  margin: 2%;
-  background-color: red;
-}
 
-.tile {
+.tile, .column-button {
   padding: 5%;
   margin: 2%;
   background-color: blue;
+  border-radius: 10px;
+}
+
+.column-button {
+  background-color: red;
 }
 
 .player1 {

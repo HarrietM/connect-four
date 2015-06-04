@@ -25,18 +25,3 @@ Board.prototype.selectColumn = function(game, player) {
     game.placePlayerPiece($(e.target.id), player);
   });
 }
-
-// Board.prototype.play = function(player1){
-//   var p1 = player1;
-//   if (p1.turn == true ){
-//     player1.selectTile(1);
-//   }else {
-//     alert("player2!")
-//   }
-
-// }
-
-
-// Board.prototype.gameOver = function(){
-//   return false
-// }

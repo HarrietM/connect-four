@@ -1,19 +1,14 @@
 function boardController(selector){
   this.selector = $(selector);
+  this.board = new Board(this.selector);
+  this.game = new Game();
+  this.player = new Player();
 }
 
 boardController.prototype.run = function(){
-  var board = new Board(this.selector);
-  var game = new Game();
-  var player = new Player();
-  // var player1 = new Player(this.selector, 1);
-  // var player2 = new Player(this.selector, 2);
-  board.load();
-  game.createBoard();
-  board.selectColumn(game, player);
-  // while loop player 1 + player 2 until a player = win
-  // board.play(player1);
-  // board.selectTile();
-  // player2.selectTile();
+
+  this.board.load();
+  this.game.createBoard();
+  this.board.selectColumn(this.game, this.player);
 
 }
